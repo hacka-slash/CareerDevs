@@ -1,0 +1,56 @@
+<!--<body>
+    <button id='buttton'>clcik to make it rain or shine </button>
+    <div id='response'></div> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="button">Click to make it Rain! Or Shine!</button>
+    <div id="cityName"></div>
+    <div id="currentTemperature"></div>
+    <div id="condition"></div>
+    <br><br>
+    <span>Current Conditions : </span><span id ="currentCondition"></span><br>
+   <span id="icon"></span>
+    <script>
+        document.getElementById('button').addEventListener('click', weather);
+        
+        function weather() {
+            var xhr = new XMLHttpRequest();
+            var apiKey = '&APPID=83f85c1e22aa5093b1dc0e692b14c966';
+            var zipCode = '02907';
+            //xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Providence&APPID=83f85c1e22aa5093b1dc0e692b14c966', true);
+            //xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Providence'+apiKey, true);
+            xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?zip='+zipCode+apiKey, true);
+            xhr.onload = function() {
+                if(this.status == 200){
+                    //console.log(xhr.responseText);
+                     //document.getElementById('response').innerText = xhr.responseText;
+                    var parsed = JSON.parse(xhr.responseText);
+                    console.log(parsed);
+                    document.getElementById("cityName").innerText = parsed.name;                    
+                    document.getElementById("currentTemperature").innerText = parsed.main.temp;
+                    document.getElementById("condition").innerText = parsed.weather[0].description;
+                    //weather icon
+                    var thunderStorm200 = '<img src="http://openweathermap.org/img/wn/11d@2x.png">';
+                    //var clear800 
+                    // for (var i=0; i<document.getElementsByTagName("td").length;i++){
+                    //  console.log(document.getElementsByTagName("td")[i].innerText);
+                    //  }
+                    }
+            }
+        xhr.send();
+        }
+        //alt+shift+f : look pretty
+    </script>
+</body>
+</html>
+
+
+
+
